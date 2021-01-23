@@ -45,7 +45,7 @@ function mainView(state, emit) {
     }).map((obj) => obj.vidEl) })}
   </div>
   <div   class="absolute bottom-0 right-0">
-  <iframe src="https://titanembeds.com/embed/789431316936261672?defaultchannel=801013977403621427&theme=IceWyvern"
+  <iframe src="https://titanembeds.com/embed/789431316936261672?defaultchannel=802523624095350805&theme=IceWyvern"
       height=${window.innerHeight}
       width=${state.panel.width}
       frameborder="0"
@@ -14582,11 +14582,15 @@ module.exports = class Viewer extends EventEmitter{
 
     if(!videoEl) {
       videoEl = document.createElement('video')
-      videoEl.autoplay = true
       document.body.appendChild(videoEl)
     }
     this.video = videoEl
+    this.video.autoplay = true
+    this.video.muted = true
 
+    this.video.addEventListener('canplay', (event) => {
+  console.log('Video can start, but not sure it will play through.');
+});
 
     this.room.on("@consumer", async consumer => {
       const {
@@ -14636,6 +14640,7 @@ module.exports = class Viewer extends EventEmitter{
     if(this.tracks.audio !== null) stream.addTrack(this.tracks.audio.track)
     if(this.tracks.video !== null) stream.addTrack(this.tracks.video.track)
     this.video.srcObject = stream
+
     this.isActive = true
     if(this.tracks.audio === null && this.tracks.video === null) this.isActive = false
   //  console.log('active', isActive)
