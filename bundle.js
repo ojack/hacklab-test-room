@@ -10,6 +10,7 @@ const server = `wss://mediasoup.tentacles.live:8000`
 const app = choo()
 app.use(mediaStore)
 app.route('/', mainView)
+app.route('/hacklab-test-room/', mainView)
 app.mount('body')
 
 function mediaStore (state, emitter) {
